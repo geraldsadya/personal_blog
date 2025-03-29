@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Personal Blog{% endblock %}
+
+{% block content %}
+<div class="home-page">
+    <h1>Welcome to My Blog</h1>
+    
+    <div class="articles-list">
+        {% if articles %}
+            {% for article in articles %}
+                <article class="article-preview">
+                    <h2><a href="{{ url_for('article', article_id=article.id) }}">{{ article.title }}</a></h2>
+                    <p class="date">Published on {{ article.date }}</p>
+                    <div class="article-excerpt">
+                        {{ article.content[:200] }}{% if article.content|length > 200 %}...{% endif %}
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p>No articles yet. Check back soon!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -11,7 +11,10 @@ app.secret_key = os.environ.get('SECRET_KEY')
 # Ensure data directories exist
 DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
 ARTICLES_DIR = os.path.join(DATA_DIR, 'articles')
-os.makedirs(ARTICLES_DIR, exist_ok=True)
+if not os.path.exists(ARTICLES_DIR):
+    os.makedirs(ARTICLES_DIR)
+print(f"Articles will be stored in: {ARTICLES_DIR}")
+
 
 # Admin credentials (in a real app, use proper authentication)
 ADMIN_USERNAME = 'admin'
@@ -54,8 +57,13 @@ def delete_article(article_id):
 # Routes for guest section
 @app.route('/')
 def home():
-    articles = get_articles()
-    return render_template('home.html', articles=articles)
+    try:
+        articles = get_articles()
+        return render_template('home.html', articles=articles)
+    except Exception as e:
+        # Print the error and return a simple text response for debugging
+        print(f"Error rendering home page: {e}")
+        return f"Error rendering home page: {e}"
 
 @app.route('/article/<article_id>')
 def article(article_id):
@@ -92,10 +100,18 @@ def logout():
 @app.route('/admin')
 def admin_dashboard():
     if not session.get('logged_in'):
-        return redirect(url_for('login'))
+        try:
+            return render_template('admin/login.html')
+        except Exception as e:
+            print(f"Error rendering login page: {e}")
+            return f"Error rendering login page: {e}"
     
-    articles = get_articles()
-    return render_template('admin/dashboard.html', articles=articles)
+    try:
+        articles = get_articles()
+        return render_template('admin/dashboard.html', articles=articles)
+    except Exception as e:
+        print(f"Error rendering dashboard: {e}")
+        return f"Error rendering dashboard: {e}"
 
 @app.route('/admin/add', methods=['GET', 'POST'])
 def add_article():
@@ -113,6 +129,10 @@ def add_article():
         return redirect(url_for('admin_dashboard'))
     
     return render_template('admin/add.html')
+
+@app.context_processor
+def inject_now():
+    return {'now': datetime.now()}
 
 @app.route('/admin/edit/<article_id>', methods=['GET', 'POST'])
 def edit_article(article_id):

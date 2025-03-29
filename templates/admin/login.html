@@ -6,7 +6,7 @@
 <div class="login-form">
     <h1>Admin Login</h1>
     
-    <form method="post">
+    <form method="post" action="{{ url_for('login') }}">
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
