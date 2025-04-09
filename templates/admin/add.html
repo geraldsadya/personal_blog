@@ -4,27 +4,26 @@
 
 {% block content %}
 <div class="article-form">
-    <h1>Add New Article</h1>
+    <h1>New Article</h1>
     
     <form method="post">
         <div class="form-group">
-            <label for="title">Title</label>
+            <label for="title">Article Title</label>
             <input type="text" id="title" name="title" required>
         </div>
         
         <div class="form-group">
-            <label for="content">Content (Markdown supported)</label>
-            <textarea id="content" name="content" rows="12" required></textarea>
-        </div>
-        
-        <div class="form-group">
-            <label for="date">Publication Date</label>
+            <label for="date">Publishing Date</label>
             <input type="date" id="date" name="date" value="{{ today }}" required>
         </div>
         
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea id="content" name="content" rows="12" required></textarea>
+        </div>
+        
         <div class="form-actions">
-            <button type="submit" class="btn primary">Create Article</button>
-            <a href="{{ url_for('admin_dashboard') }}" class="btn secondary">Cancel</a>
+            <button type="submit" class="publish-button">Publish</button>
         </div>
     </form>
 </div>

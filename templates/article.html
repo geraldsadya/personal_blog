@@ -4,15 +4,11 @@
 
 {% block content %}
 <div class="article-page">
-    <a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+    <h1>{{ article.title }}</h1>
+    <p class="article-date">{{ article.date }}</p>
     
-    <article>
-        <h1>{{ article.title }}</h1>
-        <p class="date">Published on {{ article.date }}</p>
-        
-        <div class="article-content">
-            {{ article.content_html|safe }}
-        </div>
-    </article>
+    <div class="article-content">
+        {{ article.content_html|safe }}
+    </div>
 </div>
 {% endblock %}
