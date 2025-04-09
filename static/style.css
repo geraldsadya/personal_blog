@@ -19,6 +19,26 @@ body {
     padding: 20px;
 }
 
+/* Navigation */
+.nav-links {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.nav-links a {
+    margin-left: 20px;
+    color: #777;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
 /* Main content */
 main {
     padding: 20px 0;
